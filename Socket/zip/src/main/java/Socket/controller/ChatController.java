@@ -24,11 +24,14 @@ public class ChatController {
         String memberId = (String) httpSession.getAttribute("memberId");
 
         if (memberId == null) {
-            throw new ServiceNotFoundException("Not login Exception - ChatController");
-        }
+            model.addAttribute("isLogin", false);
+            /*throw new ServiceNotFoundException("Not login Exception - ChatController");*/
+        } else {
+            int applyCount = chatService.applyChat(memberId);
 
-        int applyCount = chatService.applyChat(memberId);
-        model.addAttribute("applyCount", applyCount);
+            model.addAttribute("isLogin", true);
+            model.addAttribute("applyCount", applyCount);
+        }
 
         return "/chat/main";
     }

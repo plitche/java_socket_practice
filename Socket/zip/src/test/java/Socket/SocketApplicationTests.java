@@ -1,10 +1,10 @@
-package com.example.Thymeleaf;
+package Socket;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ThymeleafApplicationTests {
+class SocketApplicationTests {
 
 	@Test
 	void contextLoads() {

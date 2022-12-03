@@ -1,13 +1,19 @@
 # java_socket_practice
-1. Client 소켓 만듦
-자자 Socket을 만들어보자고요~~ 소켓 그거 별거없어요. 그냥 생성하면 됩니다.
+1. create Client Socket  
 
+```java
 Socket socket = new Socket()
-그럼 서버랑 연결은 어떻게 하냐! 서버쪽의 ip랑 port를 인자로 넣은 SocketAddress 프로퍼티를 만들고 이것을 인자로 넣는 connect 함수를 사용해주면 끗!
-
+```  
+* 서버 연결  
+> 서버쪽의 ip랑 port를 인자로 넣은 SocketAddress 프로퍼티를 만들고 이것을 인자로 넣는 connect 함수를 사용  
+ 
+```java
 SocketAddress address = new InetSocketAddress(hostName, port);
 socket.connect(address);
-2. Person Object를 만듦
+```  
+
+2. create Person Object
+```java
 class Person implements Serializable {
     int age;
 
@@ -15,11 +21,13 @@ class Person implements Serializable {
         this.age= age;
     }
 }
-쨘~ 속성으로 age 를 갖고있는 Person class를 만들었습니다. 이때 Serializable 를 implements 하고 있는게 보이시나요? 이걸 해줘야 나중에 byte로 변환(직렬화)이 가능하답니다.
+```
+ - Serializable를 implements 해줘야 나중에 byte로 변환(직렬화)이 가능
 
-3. 만든 Object를 byte로 변환 후 소켓을 통해 Server에 보냄
-자바 직렬화는 방법은 java.io.ObjectOutputStream 객체를 이용합니다. 자세한 코드는 여기서 발췌해왔습니다.
+3. send Object to Server as Socket after convert byte  
+ - 자바 직렬화는 방법은 java.io.ObjectOutputStream 객체를 이용  
 
+```java
 public static byte[] toByteArray (Object obj)
 {
     byte[] bytes = null;
@@ -37,6 +45,7 @@ public static byte[] toByteArray (Object obj)
     }
     return bytes;
 }
+```  
 이제 해당 함수로 받아온 byte array를 소켓을 통해 보냅니다.
 
 //생성한 person 객체를 byte array로 변환

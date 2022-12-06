@@ -74,3 +74,4 @@ int nReadSize = is.read(recvBuffer); //버퍼(recvBuffer) 인자로 넣어서 �
 byte 단위로 작업을 처리해야했고, 한번이 아니라 계속 api 쏘면서 확인하고 싶었기 때문에
 
 > close 안할 시 Address already in use: JVM_Bind 에러 발생 가능함
+  

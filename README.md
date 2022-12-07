@@ -75,3 +75,7 @@ byte 단위로 작업을 처리해야했고, 한번이 아니라 계속 api 쏘�
 
 > close 안할 시 Address already in use: JVM_Bind 에러 발생 가능함
   
+
+
+
+https://www.youtube.com/watch?v=-xKgxqG411c

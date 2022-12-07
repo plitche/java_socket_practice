@@ -56,8 +56,8 @@
     <body>
         <div class="headerWrap">
             <div class="unLoged" th:if="${session.memberId == null}">
-                <input id="formData1" type="text" th:placeholder="id"/>
-                <input id="formData2" type="text" th:placeholder="password"/>
+                <input id="formData1" type="text" th:placeholder="id" value="plitche"/>
+                <input id="formData2" type="text" th:placeholder="password" value="abcd1234!"/>
                 <button id="loginBtn" style="background: cadetblue" type="button">로그인</button>
             </div>
             <div class="loged" th:unless="${session.memberId == null}">

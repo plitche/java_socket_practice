@@ -1,4 +1,4 @@
-package Socket;
+package Socket.socketUtil;
 
 import java.io.DataOutputStream;
 import java.net.ServerSocket;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class MultichatServer {
 
-    HashMap<String,DataOutputStream> clients;
+    HashMap<String, DataOutputStream> clients;
 
     // 해쉬맵 생성, 여러개의 스레드가 동시에 접근 가능
     //synchronizedMap(원래는 asynchronized)
@@ -24,7 +24,7 @@ public class MultichatServer {
             //7777 port 열어놓기
             serverSocket = new ServerSocket(7777);
             System.out.println("server has started.");
-            while(true) {
+            while (true) {
                 socket = serverSocket.accept();
                 System.out.println("a new connection from [" + socket.getInetAddress() + ":" + socket.getPort() + "]");
 
@@ -32,7 +32,8 @@ public class MultichatServer {
                 ServerReceiver thread = new ServerReceiver(socket);
                 thread.start();
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+}

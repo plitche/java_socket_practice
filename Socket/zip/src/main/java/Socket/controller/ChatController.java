@@ -6,14 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.management.ServiceNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,7 +25,7 @@ import java.util.ArrayList;
 public class ChatController {
 
     final ChatService chatService;
-    private static Socket socket;
+    private Socket socket;
 
     @RequestMapping()
     public String goChatPage(HttpServletRequest request,
@@ -43,17 +42,21 @@ public class ChatController {
             model.addAttribute("isLogin", true);
             model.addAttribute("applyCount", applyCount);
 
-            if (applyCount <= 1) {
-                socket = new Socket("localhost", 9091);
-            }
-
-            ServerSocket serverSocket = new ServerSocket(9992);
-            Socket s = serverSocket.accept();
-
-            System.out.println("??");
+            socket = new Socket("localhost", 9092);
 
         }
         return "/chat/main";
+    }
+
+    @RequestMapping("/send")
+    @ResponseBody
+    public void sendChat(@RequestParam String sendText) throws IOException {
+        System.out.println("sendText = " + sendText);
+
+        PrintWriter pr = new PrintWriter(socket.getOutputStream());
+        pr.println(sendText);
+        pr.flush();
+        pr.close();
     }
 
     public static byte[] toByteArray (Object obj)

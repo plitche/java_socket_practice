@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chatting</title>
+</head>
+<style>
+    body {position: absolute}
+    button {border: 2px solid red; border-radius: 20%; margin-right: 10px; background: red; padding: 5px; font-weight: bold; font-size: large; color: white;}
+
+    .title {position: relative; top: 100px; left: 50%; width: 624px;}
+    .outerWrap {position: relative; top: 100px; left: 50%; width: 624px; height: 700px;}
+    .outerWrap div:first-child {border-top: 4px solid darkolivegreen;}
+    .outerWrap div:last-child {border-bottom: 4px solid darkolivegreen;}
+    .outerWrap div {border-bottom: 2px solid darkolivegreen;}
+    .topWrap { display: flex }
+    .topWrap p:last-child { float: right }
+    .footerWrap {padding: 15px 0 15px 0;}
+    .footerWrap button { float: right; }
+    .footerWrap input {width: 80%; height: 30px; font-weight: bolder; font-size: 20px;}
+</style>
+<body>
+    <header th:replace="/header :: commonHeader"></header>
+
+    <!--<p th:text="${isLogin}">로그인 여부</p>-->
+
+    <div class="title">
+        <h1>여러 사람들과 소통하세요!</h1>
+    </div>
+    <div class="outerWrap">
+        <div class="topWrap">
+            <p>~~님께서 입장하셨습니다.</p>
+            <p th:text="${applyCount}">채팅 참여자 숫자</p>
+        </div>
+        <div style="min-height: 500px;">
+            <img />
+            <div>
+                <Strong>작성자 :</Strong>
+                <p></p>
+            </div>
+            <div>
+                <Strong>작성자 :</Strong>
+                <p></p>
+            </div>
+        </div>
+        <div class="footerWrap">
+            <input type="text" placeholder="..." />
+            <button>전달</button>
+        </div>
+    </div>
+</body>
+</html>

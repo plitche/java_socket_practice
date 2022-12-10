@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Chatting</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <style>
     body {position: absolute}
@@ -14,11 +15,38 @@
     .outerWrap div:last-child {border-bottom: 4px solid darkolivegreen;}
     .outerWrap div {border-bottom: 2px solid darkolivegreen;}
     .topWrap { display: flex }
-    .topWrap p:last-child { float: right }
+    .topWrap p:last-child { float: right; position: absolute; right: 0}
     .footerWrap {padding: 15px 0 15px 0;}
     .footerWrap button { float: right; }
     .footerWrap input {width: 80%; height: 30px; font-weight: bolder; font-size: 20px;}
 </style>
+<script>
+    $(document).ready(function() {
+        $('#sendChat').on('click', function() {
+            let _text = $('.footerWrap input');
+
+            if (_text.val() === '' || _text.val() === null) {
+                alert('내용을 작성해 주세요.')
+                _text.focus()
+                return;
+            }
+
+            $.ajax({
+                url: '/chat/send',
+                type: "POST",
+                data: {"sendText": encodeURI(_text.val())},
+                success: function(data) {
+                    _text.val('')
+                    // alert(data.message);
+                },
+                error:function(request,status,error){
+                    // console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            })
+        })
+    })
+
+</script>
 <body>
     <header th:replace="/header :: commonHeader"></header>
 
@@ -30,10 +58,9 @@
     <div class="outerWrap">
         <div class="topWrap">
             <p>~~님께서 입장하셨습니다.</p>
-            <p th:text="${applyCount}">채팅 참여자 숫자</p>
+            <p th:text="${applyCount} + 명">채팅 참여자 숫자</p>
         </div>
         <div style="min-height: 500px;">
-            <img />
             <div>
                 <Strong>작성자 :</Strong>
                 <p></p>
@@ -45,7 +72,7 @@
         </div>
         <div class="footerWrap">
             <input type="text" placeholder="..." />
-            <button>전달</button>
+            <button id="sendChat">전달</button>
         </div>
     </div>
 </body>

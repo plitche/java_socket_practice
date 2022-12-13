@@ -97,3 +97,46 @@ https://www.youtube.com/watch?v=-xKgxqG411c
 예를들어 컴퓨터 1000대가 접속하면 1000개의 서버소켓이 만들어지고 1000개의 서버소켓이 1000개의 accept() 메소드를 호출하는 것 => 비효율적  
 서버 소켓이 너무많아지면 과부하 발생 가능
 > 쓰레드(Thread)를 통해 해당 문제 해결  
+
+---
+static class ClientReceiver extends Thread {
+		Socket socket;
+		DataInputStream in;
+        
+		ClientReceiver(Socket socket) {
+			this.socket = socket;
+			try {
+				in = new DataInputStream(socket.getInputStream());
+			} catch(IOException e) {}
+		}
+        
+		public void run() {
+			while (in != null) {
+				try {
+					System.out.println(in.readUTF());
+				} catch(IOException e) {}
+			}
+		}
+	}
+    
+    //main에 UserName을 성분으로 할당
+	public static void main(String args[]) {
+		if(args.length != 1) {
+			System.out.println("usage: java MultichatClient username");
+			System.exit(0);
+		}
+        
+        // 서버쪽으로 접속
+		try {
+			String serverIp = "127.0.0.1";
+			Socket socket = new Socket(serverIp, 7777);
+			System.out.println("connected to server.");
+			Thread sender = new Thread(new ClientSender(socket, args[0]));
+			Thread receiver = new Thread(new ClientReceiver(socket));
+			sender.start();
+			receiver.start();
+		} catch(ConnectException ce) {
+			ce.printStackTrace();
+		} catch(Exception e) {}
+	}
+}

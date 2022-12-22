@@ -51,12 +51,17 @@ public class ChatController {
     @RequestMapping("/send")
     @ResponseBody
     public void sendChat(@RequestParam String sendText) throws IOException {
-        System.out.println("sendText = " + sendText);
+        // DEV용 코드 추후 삭제 필요 start
+        System.out.println("this.socket = " + this.socket);
+        if (this.socket == null) socket = new Socket("localhost", 9092);
+        // DEV용 코드 추후 삭제 필요 end
 
         PrintWriter pr = new PrintWriter(socket.getOutputStream());
         pr.println(sendText);
         pr.flush();
         pr.close();
+//        this.socket.close();
+        this.socket = null;
     }
 
     public static byte[] toByteArray (Object obj)

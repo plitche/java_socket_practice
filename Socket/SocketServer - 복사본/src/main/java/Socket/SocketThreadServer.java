@@ -24,13 +24,7 @@ public class SocketThreadServer extends Thread {
             String connIp = socket.getInetAddress().getHostAddress();
             System.out.println(connIp + "에서 연결 시도.");
 
-            /*
-             * 접근한 소켓 계정의 ip를 체크한다. KTOA 연동 모듈인지 체크
-             * 정상이면 먼저 정상 접근되었음을 알린다.
-             **/
-            br = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-
+            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             pw = new PrintWriter(socket.getOutputStream());
 
             // 클라이언트에서 보낸 문자열 출력

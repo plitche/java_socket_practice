@@ -19,18 +19,6 @@ public class SocketApplication {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(SocketApplication.class, args);
 
-//		ServerSocket serverSocket = new ServerSocket(9092);
-//		Socket s = serverSocket.accept();
-//
-//		InputStreamReader in = new InputStreamReader(s.getInputStream());
-//		BufferedReader bf = new BufferedReader(in);
-//
-//		String str = bf.readLine();
-////		int str2 = bf.read();
-//		System.out.println("str = " + str);
-////		System.out.println("str2 = " + str2);
-////		serverSocket.close();
-
 		System.out.println(":::                                                :::");
 		System.out.println(":::       Socket Application  Process Start        :::");
 		System.out.println(":::                                                :::");

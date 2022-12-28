@@ -59,19 +59,20 @@ public class ChatController {
 
         try {
             // 서버에 요청 보내기
-            if (this.socket == null) socket = new Socket("localhost", 9092);
+            if (this.socket == null || this.socket.isClosed()) {
+                socket = new Socket("localhost", 9092);
+            }
             System.out.println(socket.getInetAddress().getHostAddress() + "에 연결됨");
             
             // 메시지 전달
             pw = new PrintWriter(socket.getOutputStream());
             pw.println(sendText);
             pw.flush();
-            pw.close();
 
             // 메시지 받기
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String returnMsg = br.readLine();
-            if (br.readLine() != null) resultMap.put("message", returnMsg);
+            if (returnMsg != null) resultMap.put("message", returnMsg);
         } catch (IOException e) {
             resultMap.put("message", "채팅 목록 조회 중 오류가 발생하였습니다.");
             System.out.println(e.getMessage());

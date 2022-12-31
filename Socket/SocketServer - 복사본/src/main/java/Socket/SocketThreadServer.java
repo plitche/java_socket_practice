@@ -1,7 +1,9 @@
 package Socket;
 
-import org.slf4j.Logger;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +13,9 @@ import java.net.Socket;
 public class SocketThreadServer extends Thread {
 
     private Socket socket;
+
+    @Autowired
+    private SocketRepository socketRepository;
 
     public SocketThreadServer(Socket socket){
         this.socket=socket;
@@ -28,7 +33,8 @@ public class SocketThreadServer extends Thread {
             pw = new PrintWriter(socket.getOutputStream());
 
             // 클라이언트에서 보낸 문자열 출력
-            System.out.println(br.readLine());
+            StringBuilder sb = socketRepository.addMessage(br.readLine());
+            System.out.println(sb);
 
             // 클라이언트에 문자열 전송
             pw.println("수신되었다. 오버");

@@ -1,13 +1,20 @@
 package Socket;
 
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+@Service
 public class SocketRepository {
 
-    private final StringBuilder sb = new StringBuilder();
+    private StringBuilder sb = new StringBuilder();
+
+    public SocketRepository() {
+    }
 
     public StringBuilder addMessage(Object message) {
+        if (!this.sb.equals("")) this.sb.append("|");
         this.sb.append(message);
         return sb;
     }

@@ -52,7 +52,10 @@ public class ChatController {
 
     @RequestMapping("/send")
     @ResponseBody
-    public Map<String, Object> sendChat(@RequestParam String sendText) throws IOException {
+    public Map<String, Object> sendChat(@RequestParam String sendText, HttpServletRequest request) throws IOException {
+        HttpSession httpSession = request.getSession();
+        String memberId = (String) httpSession.getAttribute("memberId");
+
         Map<String, Object> resultMap = new HashMap<>();
         PrintWriter pw = null;
         BufferedReader br = null;
@@ -65,8 +68,12 @@ public class ChatController {
             System.out.println(socket.getInetAddress().getHostAddress() + "에 연결됨");
             
             // 메시지 전달
+            Map<String, Object> dataMap = new HashMap();
+            dataMap.put("memberId", memberId);
+            dataMap.put("sendText", sendText);
+
             pw = new PrintWriter(socket.getOutputStream());
-            pw.println(sendText);
+            pw.println(dataMap);
             pw.flush();
 
             // 메시지 받기
@@ -109,3 +116,4 @@ public class ChatController {
         return bytes;
     }
 }
+

@@ -3,22 +3,21 @@ package Socket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+@RequiredArgsConstructor
 public class SocketThreadServer extends Thread {
 
     private Socket socket;
+    SocketRepository socketRepository;
 
-    @Autowired
-    private SocketRepository socketRepository;
-
-    public SocketThreadServer(Socket socket){
+    public SocketThreadServer(Socket socket, SocketRepository socketRepository){
         this.socket=socket;
+        this.socketRepository=socketRepository;
     }
 
     //단순 문자열 Thread server

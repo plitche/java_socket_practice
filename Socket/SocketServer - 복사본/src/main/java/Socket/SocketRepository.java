@@ -14,11 +14,12 @@ public class SocketRepository {
     }
 
     public StringBuilder addMessage(String message) {
-        message.replaceAll("\\{", "")
-                .replaceAll("}", "");
+        String replaceText = message.replace("{", "")
+                                    .replace("}", "")
+                                    .replace(" ", "");
 
         if (!this.sb.equals("")) this.sb.append("/");
-        this.sb.append(message);
+        this.sb.append(replaceText);
         return sb;
     }
 }

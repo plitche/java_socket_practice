@@ -59,8 +59,8 @@ public class ChatController {
         PrintWriter pw = null;
         BufferedReader br = null;
 
-        ArrayList<Map<String, Object>> memberList = new ArrayList<>();
-        ArrayList<Map<String, Object>> msgList = new ArrayList<>();
+        ArrayList<String> memberList = new ArrayList<>();
+        ArrayList<String> msgList = new ArrayList<>();
 
         try {
             // 서버에 요청 보내기
@@ -90,22 +90,9 @@ public class ChatController {
                     String[] idSplit = mapSplit[0].split("=");
                     String[] msgSplit = mapSplit[1].split("=");
 
-                    Map<String, Object> tempMap = new HashMap<>();
-                    tempMap.put("memberId", idSplit[1]);
-                    memberList.add(tempMap);
-
-                    tempMap = new HashMap<>();
-                    tempMap.put("msgSplit", msgSplit[1]);
-                    memberList.add(tempMap);
+                    memberList.add(idSplit[1]);
+                    msgList.add(msgSplit[1]);
                 }
-            }
-
-            for (Map<String, Object> stringObjectMap : msgList) {
-                System.out.println("stringObjectMap = " + stringObjectMap);
-            }
-
-            for (Map<String, Object> stringObjectMap : memberList) {
-                System.out.println("stringObjectMap = " + stringObjectMap);
             }
 
             if (memberList.size() != msgList.size()) throw new IOException("메세지 오류 발생");

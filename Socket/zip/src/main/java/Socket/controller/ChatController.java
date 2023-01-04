@@ -17,9 +17,8 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -78,8 +77,23 @@ public class ChatController {
 
             // 메시지 받기
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String returnMsg = br.readLine();
-            if (returnMsg != null) resultMap.put("message", returnMsg);
+            String returnSocket = br.readLine();
+            String[] split = returnSocket.split("/");
+
+            List<String> collect = Arrays.stream(split)
+                    .map(s -> s.replaceAll("\\{", "")
+                    .replaceAll("}", ""))
+                    .collect(Collectors.toList());
+
+            for (String s : collect) {
+                System.out.println("s = " + s);
+            }
+
+            ArrayList<Map<String, Object>> msgList = new ArrayList<>();
+            Map<String, Object> eachMsg = new HashMap<>();
+
+            if (msgList.size() != 0) resultMap.put("message", msgList);
+            else resultMap.put("error", "오류가 발생하였습니다.");
         } catch (IOException e) {
             resultMap.put("message", "채팅 목록 조회 중 오류가 발생하였습니다.");
             System.out.println(e.getMessage());

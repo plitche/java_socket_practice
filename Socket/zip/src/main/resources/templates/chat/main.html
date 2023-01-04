@@ -37,6 +37,7 @@
                 data: {"sendText": encodeURI(_text.val())},
                 success: function(data) {
                     _text.val('')
+                    console.log(data.message)
                     alert(data.message);
                 },
                 error:function(request,status,error){

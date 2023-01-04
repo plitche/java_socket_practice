@@ -37,8 +37,8 @@
                 data: {"sendText": encodeURI(_text.val())},
                 success: function(data) {
                     _text.val('')
-                    console.log(data.message)
-                    alert(data.message);
+                    console.log(data.memberList);
+                    console.log(data.msgList);
                 },
                 error:function(request,status,error){
                     // console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

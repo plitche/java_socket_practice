@@ -33,7 +33,6 @@ public class SocketThreadServer extends Thread {
 
             // 클라이언트에서 보낸 문자열 출력
             StringBuilder sb = socketRepository.addMessage(br.readLine());
-            System.out.println("sb = " + sb);
 
             // 클라이언트에 문자열 전송
             pw.println(sb);

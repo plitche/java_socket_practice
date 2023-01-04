@@ -13,7 +13,10 @@ public class SocketRepository {
     public SocketRepository() {
     }
 
-    public StringBuilder addMessage(Object message) {
+    public StringBuilder addMessage(String message) {
+        message.replaceAll("\\{", "")
+                .replaceAll("}", "");
+
         if (!this.sb.equals("")) this.sb.append("/");
         this.sb.append(message);
         return sb;

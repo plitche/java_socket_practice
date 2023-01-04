@@ -59,6 +59,10 @@ public class ChatController {
         PrintWriter pw = null;
         BufferedReader br = null;
 
+        ArrayList<Map<String, Object>> memberList = new ArrayList<>();
+        ArrayList<Map<String, Object>> msgList = new ArrayList<>();
+        Map<String, Object> eachMsg = new HashMap<>();
+
         try {
             // 서버에 요청 보내기
             if (this.socket == null || this.socket.isClosed()) {
@@ -78,22 +82,31 @@ public class ChatController {
             // 메시지 받기
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String returnSocket = br.readLine();
+            System.out.println("returnSocket = " + returnSocket);
             String[] split = returnSocket.split("/");
 
-            List<String> collect = Arrays.stream(split)
-                    .map(s -> s.replaceAll("\\{", "")
-                    .replaceAll("}", ""))
-                    .collect(Collectors.toList());
+            System.out.println("split = " + split);
 
-            for (String s : collect) {
-                System.out.println("s = " + s);
+            for (String s : split) {
+                if (!s.equals("")) {
+                    String[] mapSplit = s.split(",");
+
+                    String[] idSplit = mapSplit[0].split("=");
+                    String[] msgSplit = mapSplit[1].split("=");
+
+                    eachMsg.put("memberId", idSplit[1]);
+                    eachMsg.put("msgText", msgSplit[1]);
+                }
             }
 
-            ArrayList<Map<String, Object>> msgList = new ArrayList<>();
-            Map<String, Object> eachMsg = new HashMap<>();
+            if (memberList.size() != msgList.size()) throw new IOException("메세지 오류 발생");
 
-            if (msgList.size() != 0) resultMap.put("message", msgList);
-            else resultMap.put("error", "오류가 발생하였습니다.");
+            if (msgList.size() != 0) {
+                resultMap.put("memberList", memberList);
+                resultMap.put("msgList", msgList);
+            } else {
+                resultMap.put("error", "오류가 발생하였습니다.");
+            }
         } catch (IOException e) {
             resultMap.put("message", "채팅 목록 조회 중 오류가 발생하였습니다.");
             System.out.println(e.getMessage());

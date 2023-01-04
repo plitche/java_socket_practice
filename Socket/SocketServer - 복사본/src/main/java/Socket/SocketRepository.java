@@ -14,7 +14,7 @@ public class SocketRepository {
     }
 
     public StringBuilder addMessage(Object message) {
-        if (!this.sb.equals("")) this.sb.append("|");
+        if (!this.sb.equals("")) this.sb.append("/");
         this.sb.append(message);
         return sb;
     }
